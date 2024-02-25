@@ -15,9 +15,26 @@ struct Todo: Decodable {
 
 struct ContentView: View {
     @State var todos: [String] = []
-    @State private var isShowingAlert = false
+    
+    @State private var isShowingAlert1 = false
+    @State private var isShowingAlert2 = false
+    @State private var isShowingAlert3 = false
+    @State private var isShowingAlert4 = false
+    @State private var isShowingAlert5 = false
+    @State private var isShowingAlert6 = false
+    @State private var isShowingAlert7 = false
+    @State private var isShowingAlert8 = false
+    
     @State private var isAddingClothes = false
     @State private var clothesInput = ""
+    @State private var navigate1 = false
+    @State private var navigate2 = false
+    @State private var navigate3 = false
+    @State private var navigate4 = false
+    @State private var navigate5 = false
+    @State private var navigate6 = false
+    @State private var navigate7 = false
+    @State private var navigate8 = false
     
     var body: some View {
         NavigationView{
@@ -27,12 +44,14 @@ struct ContentView: View {
                     .ignoresSafeArea(.all)
                 VStack {
                     HStack{
+                        Spacer()
                         Image("Image")
                             .resizable()
                             .clipShape(Circle())
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 50, height: 50)
-                        Text("기온별 옷차림 추천")
+                        
+                        Text("오늘 뭐 입지?")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(Color.black)
@@ -46,7 +65,7 @@ struct ContentView: View {
                     
                     
                     Button(action: {
-                                isShowingAlert.toggle()
+                                isShowingAlert1.toggle()
                             }, label: {
                                 ZStack {
                                     Capsule()
@@ -56,63 +75,65 @@ struct ContentView: View {
                                         .foregroundColor(.white)
                                 }
                             })
-                            .alert(isPresented: $isShowingAlert) {
+                            .alert(isPresented: $isShowingAlert1) {
                                 Alert(
                                     title: Text("알림"),
                                     message: Text("옵션을 선택해주세요"),
-                                    primaryButton: .default(Text("옷 추가하기")) {
-                                        isAddingClothes = true
-                                        TextField("옷을 입력하세요",text: $clothesInput)
-                                            .padding()
-                                            .textFieldStyle(.roundedBorder)
-                                                            
-                                        Button(action:{
-                                            requestData2()
-                                        }, label: {
-                                            ZStack{
-                                                Capsule()
-                                                    .frame(width:200, height:40)
-                                                    .foregroundColor(.orange)
-                                                Text("추가")
-                                                    .foregroundColor(.white)
-                                            }
-                                        })
+                                    primaryButton: .default(Text("내 옷장 보기")) {
+                                        navigate1 = true
                                     },
-                                    secondaryButton: .default(Text("옷 보기")) {
+                                    secondaryButton: .default(Text("추천 옷 보기")) {
                                         requestData1()
                                     }
                                     
                                 )
 
                             }
-                    
-                    HStack{
-                        Button(action:{
-                            requestData2()
-                        }, label: {
-                            ZStack{
-                                Capsule()
-                                    .frame(width:200, height:40)
-                                    .foregroundColor(.orange)
-                                Text("27~23°C")
-                                    .foregroundColor(.white)
-                            }
-                        })
-                        
-                        NavigationLink(destination: Input2()){
-                            Text("추가")
-                        }
-                        .frame(width: 100, height: 40)
-                                        .buttonStyle(PlainButtonStyle())
-                                        .foregroundColor(Color.white)
-                                        .padding()
-                                        .background(Color("#243062"))
-                                        .cornerRadius(10)
-                    }
+                            .background(
+                                NavigationLink(
+                                    destination: Input1(), // 이동할 목적지 뷰
+                                    isActive: $navigate1, // 네비게이션 상태 바인딩
+                                    label: EmptyView.init // 실제로 보이지 않는 뷰
+                                )
+                            )
                     
                     
                     Button(action:{
-                        requestData3()
+                        isShowingAlert2.toggle()
+                    }, label: {
+                        ZStack{
+                            Capsule()
+                                .frame(width:200, height:40)
+                                .foregroundColor(.orange)
+                            Text("27~23°C")
+                                .foregroundColor(.white)
+                        }
+                    })
+                    .alert(isPresented: $isShowingAlert2) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate2 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData2()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input2(), // 이동할 목적지 뷰
+                            isActive: $navigate2, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
+                    
+                    
+                    Button(action:{
+                        isShowingAlert3.toggle()
                     }, label: {
                         ZStack{
                             Capsule()
@@ -122,9 +143,30 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                     })
+                    .alert(isPresented: $isShowingAlert3) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate3 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData3()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input3(), // 이동할 목적지 뷰
+                            isActive: $navigate3, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
                     
                     Button(action:{
-                        requestData4()
+                        isShowingAlert4.toggle()
                     }, label: {
                         ZStack{
                             Capsule()
@@ -134,9 +176,30 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                     })
+                    .alert(isPresented: $isShowingAlert4) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate4 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData4()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input4(), // 이동할 목적지 뷰
+                            isActive: $navigate4, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
                     
                     Button(action:{
-                        requestData5()
+                        isShowingAlert5.toggle()
                     }, label: {
                         ZStack{
                             Capsule()
@@ -146,9 +209,30 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                     })
+                    .alert(isPresented: $isShowingAlert5) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate5 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData5()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input5(), // 이동할 목적지 뷰
+                            isActive: $navigate5, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
                     
                     Button(action:{
-                        requestData6()
+                        isShowingAlert6.toggle()
                     }, label: {
                         ZStack{
                             Capsule()
@@ -158,9 +242,30 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                     })
+                    .alert(isPresented: $isShowingAlert6) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate6 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData6()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input6(), // 이동할 목적지 뷰
+                            isActive: $navigate6, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
                     
                     Button(action:{
-                        requestData7()
+                        isShowingAlert7.toggle()
                     }, label: {
                         ZStack{
                             Capsule()
@@ -170,9 +275,30 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                     })
+                    .alert(isPresented: $isShowingAlert7) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate7 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData7()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input7(), // 이동할 목적지 뷰
+                            isActive: $navigate7, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
                     
                     Button(action:{
-                        requestData8()
+                        isShowingAlert8.toggle()
                     }, label: {
                         ZStack{
                             Capsule()
@@ -182,12 +308,34 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                     })
+                    .alert(isPresented: $isShowingAlert8) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text("옵션을 선택해주세요"),
+                            primaryButton: .default(Text("내 옷장 보기")) {
+                                navigate8 = true
+                            },
+                            secondaryButton: .default(Text("추천 옷 보기")) {
+                                requestData8()
+                            }
+                            
+                        )
+
+                    }
+                    .background(
+                        NavigationLink(
+                            destination: Input8(), // 이동할 목적지 뷰
+                            isActive: $navigate8, // 네비게이션 상태 바인딩
+                            label: EmptyView.init // 실제로 보이지 않는 뷰
+                        )
+                    )
                     
                     List{
                         ForEach(todos, id:\.self){ todo in
                             Text(todo)
                         }
                     }
+                    
                 }
             }
         }

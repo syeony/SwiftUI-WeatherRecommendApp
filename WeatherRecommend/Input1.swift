@@ -1,90 +1,45 @@
 //
-//  Input2.swift
+//  Input1.swift
 //  WeatherRecommend
 //
-//  Created by ohseungyeon on 2/13/24.
+//  Created by ohseungyeon on 2/24/24.
 //
-/*
-[
-  {
-    "id": "1",
-    "title": "민소매, 반팔, 반바지, 원피스",
-    "completed": false
-  },
-  {
-    "id": "2",
-    "title": "반팔, 얇은 셔츠, 반바지, 면바지",
-    "completed": true
-  },
-  {
-    "id": "3",
-    "title": "얇은 가디건, 긴팔, 면바지, 청바지",
-    "completed": false
-  },
-  {
-    "id": "4",
-    "title": "얇은 니트, 맨투맨, 가디건, 청바지",
-    "completed": false
-  },
-  {
-    "id": "5",
-    "title": "자켓, 가디건, 야상, 스타킹, 청바지, 면바지",
-    "completed": true
-  },
-  {
-    "id": "6",
-    "title": "자켓, 트렌치코트, 야상, 니트, 청바지, 스타킹",
-    "completed": true
-  },
-  {
-    "id": "7",
-    "title": "코트, 가죽자켓, 히트텍, 니트, 레깅스",
-    "completed": true
-  },
-  {
-    "id": "8",
-    "title": "패딩, 두꺼운 코트, 목도리, 기모제품",
-    "completed": true
-  }
-]
- */
-
 
 import SwiftUI
 
 
-struct Memo: Identifiable, Codable {
+struct Memo1: Identifiable, Codable {
     var id = UUID()
     var content: String
 }
 
-class MemoStore: ObservableObject {
-    @Published var memos: [Memo] {
+class MemoStore1: ObservableObject {
+    @Published var memos1: [Memo1] {
         didSet {
-            saveMemos()
+            saveMemos1()
         }
     }
 
     init() {
-        self.memos = []
-        loadMemos()
+        self.memos1 = []
+        loadMemos1()
     }
 
     // 메모 저장 함수
-    private func saveMemos() {
+    private func saveMemos1() {
         do {
-            let data = try JSONEncoder().encode(memos)
-            UserDefaults.standard.set(data, forKey: "memos")
+            let data = try JSONEncoder().encode(memos1)
+            UserDefaults.standard.set(data, forKey: "memos1")
         } catch {
             print("메모 저장 실패: \(error.localizedDescription)")
         }
     }
 
     // 메모 불러오기 함수
-    private func loadMemos() {
-        if let data = UserDefaults.standard.data(forKey: "memos") {
+    private func loadMemos1() {
+        if let data = UserDefaults.standard.data(forKey: "memos1") {
             do {
-                memos = try JSONDecoder().decode([Memo].self, from: data)
+                memos1 = try JSONDecoder().decode([Memo1].self, from: data)
             } catch {
                 print("메모 불러오기 실패: \(error.localizedDescription)")
             }
@@ -92,28 +47,28 @@ class MemoStore: ObservableObject {
     }
 
     // 메모 삭제 함수
-    func deleteMemo(_ memo: Memo) {
-        memos.removeAll { $0.id == memo.id }
+    func deleteMemo1(_ memo: Memo1) {
+        memos1.removeAll { $0.id == memo.id }
     }
 }
 
 
-struct Input2: View {
+struct Input1: View {
     @State var todos: [String] = []
     
-    @State private var newMemo = ""
-    @ObservedObject private var memoStore = MemoStore()
+    @State private var newMemo1 = ""
+    @ObservedObject private var memoStore1 = MemoStore1()
 
     
     var body: some View {
         
         VStack {
-                    TextField("새로운 옷을 입력하세요", text: $newMemo)
+                    TextField("새로운 옷을 입력하세요", text: $newMemo1)
                         .padding()
                         .textFieldStyle(RoundedBorderTextFieldStyle())
 
                     Button(action: {
-                        saveMemo()
+                        saveMemo1()
                     }, label: {
                         ZStack {
                             Capsule()
@@ -131,18 +86,18 @@ struct Input2: View {
                     }
                 }
                 .onAppear(){
-                    requestData2()
+                    requestData1()
                 }
                 
 
                 Section(header: Text("내가 추가한 옷")) {
-                    ForEach(memoStore.memos) { memo in
+                    ForEach(memoStore1.memos1) { memo in
                         HStack {
                             Text(memo.content)
                             Spacer()
                             Button(action: {
                                 // 삭제 버튼 눌렀을 때
-                                memoStore.deleteMemo(memo)
+                                memoStore1.deleteMemo1(memo)
                             }) {
                                 Image(systemName: "trash")
                                     .foregroundColor(.red)
@@ -158,8 +113,8 @@ struct Input2: View {
                 .padding()
     }
     
-    private func requestData2(){
-        requestTodo2{todo, error in
+    private func requestData1(){
+        requestTodo1{todo, error in
             guard let todo = todo else{
                 print("todo를 받아오는데 실패")
                 return
@@ -168,8 +123,8 @@ struct Input2: View {
         }
     }
     
-    func requestTodo2(completed: @escaping(Todo?, String?)->()){
-        let endPoint = "https://65c22e19f7e6ea59682acdff.mockapi.io/weathers/2"
+    func requestTodo1(completed: @escaping(Todo?, String?)->()){
+        let endPoint = "https://65c22e19f7e6ea59682acdff.mockapi.io/weathers/1"
 
         guard let url = URL(string: endPoint) else {
             completed(nil, "잘못된 URL입니다.")
@@ -199,13 +154,13 @@ struct Input2: View {
         }.resume()
     }
     
-    private func saveMemo() {
-        guard !newMemo.isEmpty else { return }
-        memoStore.memos.append(Memo(content: newMemo))
-        newMemo = ""
+    private func saveMemo1() {
+        guard !newMemo1.isEmpty else { return }
+        memoStore1.memos1.append(Memo1(content: newMemo1))
+        newMemo1 = ""
     }
 }
 
 #Preview {
-    Input2()
+    Input1()
 }
